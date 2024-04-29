@@ -6,7 +6,7 @@ require("chromedriver")
 async function testUploadFile(){
 
   // Create a driver
-  let driver = await new Builder().forBrowser("chrome").build()
+  let driver = await new Builder().forBrowser("MicrosoftEdge").build()
 
   // Get and display all of the links in the page
   await driver.get(`https://filebin.net/`)

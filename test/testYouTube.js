@@ -4,7 +4,7 @@ const fs = require("fs")
 
 async function ytScrape(){
   // create driver
-  let driver = await new Builder().forBrowser("chrome").build()
+  let driver = await new Builder().forBrowser("MicrosoftEdge").build()
 
   // Grab my own youtube channel
   await driver.get("https://www.youtube.com/channel/UCgi6J20rFtQBuff9fcVS0Sg")

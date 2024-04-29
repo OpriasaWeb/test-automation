@@ -80,7 +80,7 @@ async function deleteBook(){
     }
 
 
-    if(!shouldQuit){
+    while(!shouldQuit){
       await new Promise(resolve => setTimeout(resolve, 1000)) // Wait for 1 second before checking again
     }
   }

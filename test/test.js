@@ -3,7 +3,7 @@ const {By, Key, Builder} = require("selenium-webdriver")
 require("chromedriver")
 
 async function test_case(){
-  let driver = await new Builder().forBrowser("chrome").build()
+  let driver = await new Builder().forBrowser("MicrosoftEdge").build()
 
   await driver.get("https://google.com")
 

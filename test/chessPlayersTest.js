@@ -3,7 +3,7 @@ require("chromedriver")
 
 async function scrape(){
   // create driver
-  let driver = await new Builder().forBrowser("chrome").build()
+  let driver = await new Builder().forBrowser("MicrosoftEdge").build()
 
   await driver.get('https://ratings.fide.com/top.phtml?list=men')
 

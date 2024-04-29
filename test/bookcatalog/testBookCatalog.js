@@ -26,7 +26,7 @@ async function bookCatalog(){
 
       // Wrap the select element with the Select class
       const select = new Select(selectElement)
-      await select.selectByValue("1")
+      await select.selectByValue("3")
 
       try{
         // Click the add button

@@ -3,7 +3,7 @@ require("chromedriver")
 
 async function test_case(){
   // Create driver
-  let driver = await new Builder().forBrowser("chrome").build()
+  let driver = await new Builder().forBrowser("MicrosoftEdge").build()
 
   // Send driver to website
   await driver.get("https://github.com")
