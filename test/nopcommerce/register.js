@@ -11,6 +11,10 @@ describe("Verify register functionalities of Nop Commerce", async () => {
     await driver.get("https://demo.nopcommerce.com/")
   })
 
+  after(async () => {
+    await driver.quit()
+  })
+
   // it block
   it("Verify register with required empty details", async () => {
     await driver.findElement(By.css(".ico-register")).click()
@@ -46,38 +50,44 @@ describe("Verify register functionalities of Nop Commerce", async () => {
     assert.equal(passErr, "Password is required.")
   })
 
-  // it("Assert email validation messages", async () => {
+  it("Assert email first validation message", async () => {
+    // Set an implicit wait timeout
+    await driver.manage().setTimeouts({ implicit: 500 })
 
-  //   async function emailSendKeys(email){
-  //     let emailField = await driver.findElement(By.id('Email'));
-  //     await emailField.clear(); // Ensure the field is clear before sending keys
-  //     await emailField.sendKeys(email, Key.RETURN);
-  //   }
+    // async function emailSendKeys(email){
+    //   let emailField = await driver.findElement(By.id('Email'));
+    //   await emailField.clear(); // Ensure the field is clear before sending keys
+    //   await emailField.sendKeys(email, Key.RETURN);
+    // }
 
-  //   // Verify wrong email validation error
-  //   emailSendKeys("first@gmail")
-  //   let emailErrorOne = await driver.wait(until.elementLocated(By.id("Email-error")), 5000)
-  //   await driver.wait(until.elementIsVisible(emailErrorOne), 5000)
+    let emailField = await driver.findElement(By.id('Email'));
+    await emailField.sendKeys("first@gmail", Key.RETURN);
 
-  //   let emailErrorMsg = await emailErrorOne.getText()
-  //   assert.strictEqual(emailErrorMsg, "Wrong email")
+    let emailErrorOne = await driver.wait(until.elementLocated(By.id("Email-error")), 5000)
+    await driver.wait(until.elementIsVisible(emailErrorOne), 5000)
 
-  //   // Set an implicit wait timeout
-  //   await driver.manage().setTimeouts({ implicit: 500 })
+    let emailErrorMsg = await emailErrorOne.getText()
+    assert.strictEqual(emailErrorMsg, "Wrong email")
+  })
 
-  //   // Verify enter a valid email address validation error
-  //   emailSendKeys("second@gmail.")
-  //   let emailErrorTwo = await driver.wait(until.elementLocated(By.id("Email-error")), 10000) // Re-locate the element
-  //   await driver.wait(until.elementIsVisible(emailErrorTwo), 10000)
+  it("Assert email second validation message", async () => {
+    // Set an implicit wait timeout
+    await driver.manage().setTimeouts({ implicit: 500 })
 
-  //   let emailErrorMsgTwo = await emailErrorTwo.getText()
-  //   assert.strictEqual(emailErrorMsgTwo, "Please enter a valid email address.")
+    let emailField = await driver.findElement(By.id('Email'));
+    await emailField.clear(); // Ensure the field is clear before sending keys
+    await emailField.sendKeys("second@gmail.", Key.RETURN);
 
-  // })
+    let emailErrorTwo = await driver.wait(until.elementLocated(By.id("Email-error")), 5000) // Locate the element
+    await driver.wait(until.elementIsVisible(emailErrorTwo), 5000)
 
-  // result id
-  it("Verify ", async () => {
+    let emailErrorMsgTwo = await emailErrorTwo.getText()
+    assert.strictEqual(emailErrorMsgTwo, "Please enter a valid email address.")
+  })
 
+  // Successful registration
+  it("Verify correct information upon registration", async () => {
+    
   })
 
 })
