@@ -4,6 +4,9 @@ const assert = require("assert")
 
 // describe block
 describe("Verify register functionalities of Nop Commerce", async () => {
+  // Set global timeout for all it block executions
+  // this.timeouts(30000)
+
   let driver
 
   before(async () => {
@@ -16,7 +19,7 @@ describe("Verify register functionalities of Nop Commerce", async () => {
   })
 
   // it block
-  it("Verify register with required empty details", async () => {
+  it("Verify register with required empty credentials", async () => {
     await driver.findElement(By.css(".ico-register")).click()
     let registerTitle = await driver.getTitle()
     assert.strictEqual(registerTitle, "nopCommerce demo store. Register")
@@ -86,8 +89,56 @@ describe("Verify register functionalities of Nop Commerce", async () => {
   })
 
   // Successful registration
-  it("Verify correct information upon registration", async () => {
-    
+  it("Verify correct credentials upon registration", async () => {
+    await driver.manage().setTimeouts({ implicit: 500 })
+
+    // Personal details
+    await driver.findElement(By.xpath("//input[@type='radio' and @id='gender-male']")).click()
+    await driver.findElement(By.id("FirstName")).sendKeys("Jeremy")
+    await driver.findElement(By.id("LastName")).sendKeys("Asairpo")
+
+    // Date of birth - day
+    const day = await driver.findElement(By.name("DateOfBirthDay"))
+    const selectDay = new Select(day)
+    selectDay.selectByValue("14")
+
+    // Date of birth - month
+    const month = await driver.findElement(By.name("DateOfBirthMonth"))
+    const selectMonth = new Select(month)
+    selectMonth.selectByValue("1")
+
+    // Date of birth - year
+    const year = await driver.findElement(By.name("DateOfBirthYear"))
+    const selectYear = new Select(year)
+    selectYear.selectByValue("1933")
+
+    // Email
+    await driver.findElement(By.xpath("//input[@type='email' and @id='Email']")).clear() // clear the email
+    await driver.findElement(By.xpath("//input[@type='email' and @id='Email']")).sendKeys("asairpojbbb@gmail.com")
+
+    // Company details
+    await driver.findElement(By.id("Company")).sendKeys("iixxss")
+
+    // Password
+    await driver.findElement(By.id("Password")).sendKeys("testtesttest")
+    await driver.findElement(By.id("ConfirmPassword")).sendKeys("testtesttest")
+
+    // Submit
+    await driver.findElement(By.name("register-button")).click()
+
+    // Assertions section
+    const result = await driver.findElement(By.className("result")).getText()
+    assert.strictEqual(result, "Your registration completed", "Successfully register an account!")
+
+    const headerLinks = await driver.findElement(By.className("header-links"))
+
+    // Find the My account link
+    const myAccountLink = await headerLinks.findElement(By.className("ico-account"))
+    const logoutLink = await headerLinks.findElement(By.className("ico-logout"))
+
+    assert.strictEqual(await myAccountLink.getText(), "MY ACCOUNT")
+    assert.strictEqual(await logoutLink.getText(), "LOG OUT")
+    // Assertions section
   })
 
 })
