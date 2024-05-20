@@ -16,9 +16,13 @@ describe("Test the validations of edit", async () => {
     await driver.get('http://localhost/bookcatalog/views/bookcatalog.php');
   })
 
+  after(async () => {
+    driver.quit()
+  })
+
   // It blocks: 
   // Test back button after clicking the edit button in table
-  it("Check if back button is working", async () => {
+  it("Verify if back button is working", async () => {
     try {
       // Since we are going to update some info, we will be using xpath to locate specific book available
       if(await driver.wait(until.elementLocated(By.xpath("//button[@id='edit' and @value='45']")), 5000)){
@@ -47,7 +51,7 @@ describe("Test the validations of edit", async () => {
   })
   
   // Test update button without changing details from inputs
-  it("Check if 'Nothing was changed' modal would pop out", async () => {
+  it("Verify if 'Nothing was changed' modal would pop out", async () => {
     try {
 
       // Since we are going to update some info, we will be using xpath to locate specific book available
@@ -61,10 +65,16 @@ describe("Test the validations of edit", async () => {
         if(await driver.wait(until.elementLocated(By.id("updatebook")), 5000)){
           try {
             const updateButton = await driver.findElement(By.id("updatebook"))
+            assert.equal("Update", await updateButton.getText())
             await updateButton.click()
 
             if(await driver.wait(until.elementLocated(By.id("editSuccessOk")), 5000)){
               const okButton = await driver.findElement(By.id("editSuccessOk"))
+              assert.equal("Ok", await okButton.getText())
+
+              const validationMessage = await driver.findElement(By.id("editsuccessmessage")).getText()
+              assert.equal("Nothing was changed.", validationMessage)
+
               await okButton.click()
             }
             else{
@@ -90,13 +100,13 @@ describe("Test the validations of edit", async () => {
   })
 
   // Cntrl + C to quit the session of automation
-  while(!shouldQuit){
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds before checking again
-  }
+  // while(!shouldQuit){
+  //   await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds before checking again
+  // }
 
-  if(driver){
-    await driver.quit()
-  }
+  // if(driver){
+  //   await driver.quit()
+  // }
 
 })
 
