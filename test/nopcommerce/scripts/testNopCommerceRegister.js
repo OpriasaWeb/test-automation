@@ -1,6 +1,6 @@
 const { By, Builder, until, Key } = require("selenium-webdriver")
 const { Select } = require("selenium-webdriver/lib/select")
-const { assert } = require("assert")
+const assert = require("assert")
 
 // describe block
 describe("Verify register functionalities of Nop Commerce", async () => {
@@ -114,7 +114,7 @@ describe("Verify register functionalities of Nop Commerce", async () => {
 
     // Email
     await driver.findElement(By.xpath("//input[@type='email' and @id='Email']")).clear() // clear the email
-    await driver.findElement(By.xpath("//input[@type='email' and @id='Email']")).sendKeys("pantropiko@gmail.com")
+    await driver.findElement(By.xpath("//input[@type='email' and @id='Email']")).sendKeys("pantropikoo@gmail.com")
 
     // Company details
     await driver.findElement(By.id("Company")).sendKeys("iixxss")
